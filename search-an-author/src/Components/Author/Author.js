@@ -7,10 +7,12 @@ class Author extends React.Component {
     render () {
         let keyCount = 0;
 
+        let randomNum = Math.floor(Math.random() * 137)
+
         const name = this.props.author.name ? this.props.author.name : '';
 
         const alternateNamesItem = this.props.author.alternateNames?.map(
-            (name) => <li key={keyCount + 18 + 'b'}>{`"${name}"`}</li>
+            (name) => <li key={keyCount + 18 + 'b' + randomNum}>{`"${name}"`}</li>
         );
 
         const hasAlternateNames = this.props.author.alternateNames;
@@ -24,7 +26,7 @@ class Author extends React.Component {
         const workCount = this.props.author.workCount;
 
         const topSubjectsItem = this.props.author.topSubjects?.map(
-            (subject) => <li key={keyCount + 254 + 'su'}>{`"${subject}", `}</li>
+            (subject) => <li key={keyCount + 254 + 'su' + randomNum}>{`"${subject}", `}</li>
         );
 
         const hasTopSubjects = this.props.author.topSubjects;
