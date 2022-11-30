@@ -107,3 +107,4 @@ Then we can import the method we just created into our App component. We'll use 
 
 When I started testing the app, I've found a bug - the 'map' methods inside AuthorsList and Author components were generating more than one instance with the same key attribute, and some side effect from previous search results remained polluting the app's. So I decided to give to the components AuthorsList and Authors their own state and lifecycle methods, in order to clean side effects and separate the iteration logic from the rendering logic and avoid duplicated key attributes.
 
+Update: what I thought that was causing the bug wasn't the actual cause. I'm still testing and researching to find where the bug is.
