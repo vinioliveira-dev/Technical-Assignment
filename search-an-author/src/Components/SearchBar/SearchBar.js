@@ -31,11 +31,17 @@ class SearchBar extends React.Component {
     }
 
     render () {
+        const invalidRegex = /[^A-Za-z0-9_]/gi;
+
+        const found = this.state.term.match(invalidRegex);
+
         return (
             <div className="SearchBar">
                 <input
+                    type="text"
                     onChange={this.handleTermChange} 
                     placeholder="Type the name of an author..." />
+                <p className={found && this.state.term !== '' ? "invalid-alert" : "hidden"}> <span className="red">X</span> Please make sure that you only inserted letters and/or whitespace in the input field.</p>
             </div>
         )
     }

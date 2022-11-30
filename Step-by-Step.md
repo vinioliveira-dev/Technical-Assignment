@@ -112,4 +112,4 @@ Update 2: Tested with more data type validation to count with situations where c
 
 Now, at last but not least, we're going to add some client-side form validation. Since the parameter for our search term consists in a string that represents an author name, we'll not allow the use of symbols and/or numbers in our input field.
 
-In order to do that, I've decided to create a state for the component that holds our input field. Inside its state, we'll store the variables we're gonna use to handle our form validation.
+In order to do that, I've created another method inside our SearchBar component (which is the one that holds our input field), responsible to compare the type of data provided by the user with a validation condition (that consists in 'no numbers and no symbols'). To create this specific condition, I've used Regex codes.
