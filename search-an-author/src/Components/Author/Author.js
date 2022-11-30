@@ -3,16 +3,35 @@ import React from "react";
 import './author.css';
 
 class Author extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isCollapsed: true,
+        }
+
+        this.toggleIsCollapsed = this.toggleIsCollapsed.bind(this);
+    }
+
+    toggleIsCollapsed() {
+        if (this.state.isCollapsed) {
+            this.setState({isCollapsed: false});
+        } else if (!this.state.isCollapsed) {
+            this.setState({isCollapsed: true});
+        }
+    }
+
 
     render () {
         let keyCount = 0;
 
-        let randomNum = Math.floor(Math.random() * 137)
-
         const name = this.props.author.name ? this.props.author.name : '';
 
         const alternateNamesItem = this.props.author.alternateNames?.map(
-            (name) => <li key={keyCount + 18 + 'b' + randomNum}>{`"${name}"`}</li>
+            (name) => {
+                keyCount ++;
+                return <li key={keyCount}>{`"${name}"`}</li>
+            }
         );
 
         const hasAlternateNames = this.props.author.alternateNames;
@@ -26,7 +45,10 @@ class Author extends React.Component {
         const workCount = this.props.author.workCount;
 
         const topSubjectsItem = this.props.author.topSubjects?.map(
-            (subject) => <li key={keyCount + 254 + 'su' + randomNum}>{`"${subject}", `}</li>
+            (subject) => {
+                keyCount++;
+                return <li key={keyCount}>{`"${subject}", `}</li>
+            }
         );
 
         const hasTopSubjects = this.props.author.topSubjects;
@@ -38,14 +60,15 @@ class Author extends React.Component {
                 <ul className={hasAlternateNames ? '' : 'hidden'}>
                     {alternateNamesItem}
                 </ul>
-                <p><span className={topWork ? 'decorated': 'hidden'}>Best Work: </span>{topWork}</p>
-                <p className={birthDate ? '' : 'hidden'}><span className={birthDate ? 'decorated' : 'hidden'}>Birth Date: </span>{birthDate}</p>
-                <p className={deathDate ? '' : 'hidden'}><span className={deathDate ? 'decorated' : 'hidden'}>Death Date: </span>{deathDate}</p>
-                <p className={workCount ? '' : 'hidden'}><span className={workCount ? 'decorated' : 'hidden'}>Number of Works: </span>{workCount}</p>
-                <p className={hasTopSubjects ? 'decorated' : 'hidden'}>Subjects/Categories:</p>
-                <ul className={hasTopSubjects ? '' : 'hidden'}>
+                <p className={this.state.isCollapsed ? 'hidden' : ''}><span className={topWork ? 'decorated': 'hidden'}>Best Work: </span>{topWork}</p>
+                <p className={this.state.isCollapsed || !birthDate ? 'hidden' : ''}><span className={birthDate ? 'decorated' : 'hidden'}>Birth Date: </span>{birthDate}</p>
+                <p className={this.state.isCollapsed || !deathDate ? 'hidden' : ''}><span className={deathDate ? 'decorated' : 'hidden'}>Death Date: </span>{deathDate}</p>
+                <p className={this.state.isCollapsed || !workCount ? 'hidden' : ''}><span className={workCount ? 'decorated' : 'hidden'}>Number of Works: </span>{workCount}</p>
+                <p className={this.state.isCollapsed || !hasTopSubjects ? 'hidden' : ''}>Subjects/Categories:</p>
+                <ul className={!this.state.isCollapsed || hasTopSubjects ? '' : 'hidden'}>
                     {topSubjectsItem}
                 </ul>
+                <div className="collapse-button" onClick={this.toggleIsCollapsed}>{this.state.isCollapsed ? 'Show more...' : 'Show less'}</div>
             </div>
         )
     }

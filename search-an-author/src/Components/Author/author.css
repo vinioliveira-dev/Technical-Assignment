@@ -32,6 +32,10 @@
     display: inline;
     margin-bottom: 1.2rem;
 }
+
+.Author-Information ul {
+    display: inline-block;
+}
   
 .Author-Information p {
     font-size: 1rem;
@@ -52,4 +56,27 @@
 
 .hidden {
     display: none;
+}
+
+.collapse-button {
+    position: relative;
+    bottom: .16rem;
+    right: 0.15rem;
+    color: darkblue;
+    text-decoration: underline;
+    transition: all 0.1s linear;
+    margin: 2rem 3rem 4rem;
+    cursor: pointer;
+}
+
+.collapse-button:hover {
+    color: blue;
+    text-shadow: 0 0 2px lightblue;
+    text-decoration: none;
+}
+
+.collapse-button:active {
+    color: hsl(220, 80%, 80%);
+    -webkit-text-stroke: 1px darkblue;
+    text-decoration: none;
 }

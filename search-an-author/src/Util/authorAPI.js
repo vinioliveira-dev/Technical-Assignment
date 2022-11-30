@@ -1,7 +1,7 @@
 const authorAPI = {
 
     async search(term) {
-        return fetch(`https://openlibrary.org/search/authors.json?q=${term}&offset=0&limit=10000000`
+        return fetch(`https://openlibrary.org/search/authors.json?q=${term}&offset=0&limit=75`
         ).then( response => {
             return response.json();
         }).then(jsonResponse => {
