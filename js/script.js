@@ -1,29 +1,15 @@
-//Declaring a variable to hold the API's endpoint url 
-//let's use the example url given, later we'll change it for the user's input value
-const url = `https://openlibrary.org/search/authors.json?q=harry&offset=0&limit=50`;
-
-//Selecting elements from html to interact with:
 const loadingElement = document.querySelector("#loading");
 
-const postsContainer = document.querySelector("#posts-container");
+const resultsContainer = document.querySelector("#result");
 
-//Function to get our authors
-async function getAuthor() {
+async function getAuthor(name) {
+    const response = await fetch(`https://openlibrary.org/search/authors.json?q=${name}&offset=0&limit=20`);
 
-    //First promise with response object to check if endpoint is conecting
-    const response = await fetch(url);
+    //console.log(response);
 
-    //Let's test if our response is 'ok'
-    console.log(response);
-
-    //Now let's extract our data from the API call using a JSON object
     const data = await response.json();
 
-    //And let's check what data we got specifically
-    console.log(data);
+    //console.log(data);
+}
 
-    //Now that we've loaded our data, let's hide our loading element
-    loadingElement.classList.add("hide");
-};
-
-getAuthor();
+getAuthor('harry');

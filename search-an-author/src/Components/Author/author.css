@@ -1,0 +1,38 @@
+.Author {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px dashed darkgray;
+    margin: .6rem 0;
+}
+  
+.Author-Information {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+  
+.Author-Information h3 {
+    margin: .22rem 10px;
+    color: hsl(120, 9%, 10%);
+    font-size: 1.6rem;
+    
+}
+  
+.Author-Information p {
+    font-size: .83rem;
+    font-weight: 300;
+    color: hsl(120, 95%, 16%);
+    margin: 0.22rem 10px .35rem;
+    line-height: 1.5rem;
+}
+
+.decorated {
+    font-weight: 700;
+    font-style: italic;
+    margin-right: .25rem;
+}
+
+.hidden {
+    display: none;
+}

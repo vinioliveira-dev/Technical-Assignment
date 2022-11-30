@@ -16,3 +16,94 @@ I started by creating a directory called "/Components" inside the app's /src fol
 - ...;
 
 So I began working on the App component, refactoring it to rewrite the function component as a ES6 Class to make it easier to work with the lifecycle methods and the app's state instead of using hooks callbacks.
+
+Once my class component skeleton was ready, I added the render method, to return the other components and elements that compose the app's page.
+
+With the basic structure of the page already sketched on the App component, I started working on the SearchBar component, creating the files SearchBar.js and searchBar.css inside the SearchBar folder in the Components directory.
+
+In the JS file of this component, I wrote it as a class component, putting only presentational elements at first (just wrote the render method to return a div that will contain the input field, including a input tag and a submit button).
+
+Side Note: To keep it as simple as possible, I preferred to use the &lt;button&gt; tag for the submit button, once this button functionality would be secondary, as the results would already be fetched as the user types on the input field.
+
+After setting the elements to be rendered by this component, I've wrote a few styles to organize it better on the screen in the 'searchBar.css' file and imported this file inside the components JS file.
+
+With the basics of the SearchBar component ready, I went back to the App component to properly import the SearchBar and render it on the screen, while tweaking its styles on the file 'searchBar.css' to fit the screen better.
+
+So now it was time to create the SearchResults component. I created the files 'SearchResults.js' and 'searchResults.css' inside the /SearchResults folder in the /Components directory.
+
+In the JS file for this component, i first wrote the basic structure of a class component. In its render method, I've put the 'AuthorList' component, which will contain each individual 'Author' component that matches the query parameters of the search. Since I haven't wrote the 'AuthorsList' neither the 'Author' components so far, I've commented this components instance out of the code. After this, I correctly imported this component in App.js and added some basic styles in the 'searchResults.css' file to render it a little bit better on the screen.
+
+So the 'Author' component will represent each individual result, or we could say each author data retrieved from the API call with the input given by the user, and each of this results will be listed in the component 'AuthorsList' (which means the 'Author' component instances will be rendered by the 'AuthorsList' component). The 'AuthorsList' components, on the other hand, will be rendered by the 'SearchResults' component, just to separate the logic of the iteration through the results obtained from the presentational component.
+
+Given this idea, I started working first on the AuthorsList component, creating the AuthorsList.js and authorsList.css files in the respective component's folder.
+
+Inside the JS file for the AuthorsList component, I created a render method returning only a div with a comment inside to remember me to add a iteration to render Author component instances for each individual result obtained.
+
+Now onto the Author component, following the same pattern of creating a JS file and a css file with the same name as the component and located inside its respective folder.
+
+In the Author.js file, I created a class component with a render method that returns all presentational elements that will contain the data received.
+
+After rendering an example instance of this component on the screen, I've added a few basic styles to make it fit better on the screen.
+
+Now that the all the presentational structure is almost all done, it's time to add the needed logic to develop the search feature and check if the results are being rendered as requested on the assignment.
+
+To start this logic building phase, I chose to begin with passing down the state of a search results parameter through all the components that will need this data, and render the result list.
+
+For that, to keep the code cleaner, all the state of the app will be held in the App component. So, the first thing to do was to add a constructor method to the App component pulling the React Class Prototype "props" using 'super(props)' and creating a slice of state with 'this.state.searchResults'. This slice of state was initialized as an empty array, in order to become and array of 'author' objects later.
+
+Side Note: I decided to not use Redux in this assignment, given the fact that the data managed in this app's state wasn't complex, so the code can be more simple, readable and cleaner by using only React's state this way.
+
+Just to be able to test this code before retrieving any data from the API, I wrote some 'hard-coded' objects to fill this array. Each object would have the following properties (which I noted that consists on the informations that this API returns when I first tested it at the beginning):
+- key (as an identifier);
+- name;
+- alternativeNames;
+- birthDate;
+- deathDate;
+- topWork;
+- workCount;
+- topSubjects.
+
+Now that we have a state variable to hold the data for the search results (and using those hard-coded mock information to create examples of 'authors' objects), we need to pass this information to the SearchResults component as props.
+
+To test if our mock data is being passed correctly through the SearchResults component, I used the 'React Dev Tools' extension on Google Chrome browser to analise the components being rendered in the page at the local host. And the authors objects were being passed correctly (only diference is that the properties were shown in alphabetical order in the React DevTools).
+
+Now that the connection to this slice of the state was made to the SearchResults component, we need to keep passing it to the nested components that will need this data to properly render the information to the user. So, unavoidably, I've done some props drilling to pass this state data again to the AuthorList component inside the SearchResults component.
+
+After doing this, I tested again if the data needed was being correctly passed as props using the React DevTools, and it confirmed that everything was working just fine.
+
+Now, inside the AuthorsList component, we need to render an Author component for each author object we have in our state. To do this, I thought it would be better to use the '.map()' method to render each author object in the 'authors' property.
+
+So I made a JS injection inside the 'div' element returned by this component and called the .map() method on the array of authors objects received as prop. Inside the callback function of this method, for each object in the array, I returned an instance of the 'Author' component, passing down to it the the respective author object as a prop, and adding another prop called 'key' (which holds the value of 'author.key'), to keep each instance individualized.
+
+Our .map() worked and we are generating an instance of the 'Author' component for each objected received as props. But we still aren't using this object's details to render the correct information on the screen. So we need to extract each piece of information from those objects that we want to show on our screen.
+
+So now, inside the Author.js file (for the Author component), I changed the content of each element being rendered to inject the data received as a JS injection inside each element's tags' content.
+
+And as we check on the screen, so far everything is working as intended. All the data we wanted to render from each author object is being rendered correctly. Only did a few css tweaks to format it better on the screen.
+
+Now that all this 'internal' logic seems to be working, it's time to work with async logic and lifecycle methods in order to handle the data retrieval with the API call.
+
+First of all, we need to create a method that updates the 'searchResults' parameter in the App component with a user's search results. This method shall allow the user to give an input as a search parameter, we will use this input to send a GET request (using fetchAPI) to the API's custom endpoint url, and then, when (and if) we receive a response from the API, we will use this response to update the slice 'searchResults' of the state.
+
+So to do that, I created a method named '.search()' inside the App component. First I want this method to capture the user's input, which I did using an 'onChange' event handler and tested it by logging the value of the input on the console.
+
+With this bare skeleton of the method done, I'll pass it to the SearchBar component as a prop called 'onSearch'. To test if the method is being passed down correctly, I check the props being passed to the SearchBar component using React DevTools and everything is working correctly.
+
+Now inside the SearchBar component, we will create a method (also called 'search()') to call the method received via prop using as argument 'this.state.term' (which will hold the value of the user's input).
+
+To capture the user's input, I've created a method called 'handleTermChange', which accepts an event as argument and sets this components state value of 'term' as the value of the target of the event (which is the value of our input tag where we will put this event handler).
+
+To check if the input is being correctly captured, I've tested it using React DevTools to check if the state of the SearchBar component was being updated as we type in the input field, and it was working correctly.
+
+Now it's time to implement our search request to the API. To separate the concerns, I created a new folder inside the /src directory, called '/util'. Inside this folder, I created the file 'authorAPI.js'.
+
+Inside this file, I created a const variable called 'authorAPI', and set it equal to an object. Inside this object, I created the method 'search(term)', which, as you can see, takes a term as an argument. Inside this method, I created a variable to hold the API's endpoint url, using placeholders for the parameters that we are going to change accordingly to the user's given input. This method returns a promise that will eventually resolve to the list of authors that match the user's input. To start the promise chain, we'll do a GET request using '.fetch()' pointing to the custom endpoint's url (which changes the URL parameters that corresponds to the author's name given in the input, using string interpolation).
+
+Now that we are able to retrieve data from our API call, we need to format this data converting the returned response to JSON. Then, we want to iterate through each 'author' object inside our 'jsonResponse', in order to format what information we are going to extract from them and create an array with all those objects, so we chain a method 'then()' and, inside its callback function, we extract each key-value pair we want from the 'author' objects obtained.
+
+So, since we've built our async call to the API and got our jsonResponse promise in return, we can return from this method a mapped array containing 'author' objects.
+
+Then we can import the method we just created into our App component. We'll use the promise it returns when called inside App's own .search(term) method to set our state's searchResult, that consists in our array of 'author' objects returned in response to our search.
+
+When I started testing the app, I've found a bug - the 'map' methods inside AuthorsList and Author components were generating more than one instance with the same key attribute, and some side effect from previous search results remained polluting the app's. So I decided to give to the components AuthorsList and Authors their own state and lifecycle methods, in order to clean side effects and separate the iteration logic from the rendering logic and avoid duplicated key attributes.
+
