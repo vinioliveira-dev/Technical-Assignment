@@ -10,13 +10,23 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-bottom: 2px dashed black;
+    padding-bottom: .2rem;
+    margin-bottom: .4rem;
 }
   
 .Author-Information h3 {
     margin: .22rem 10px;
     color: hsl(120, 9%, 10%);
-    font-size: 1.6rem;
-    
+    font-size: 1.2rem;
+    margin-top: .6rem;
+    text-decoration: underline;
+}
+
+.Author-Information ul li{
+    font-size: 1rem;
+    color: black;
+    padding: .2rem 0;
 }
   
 .Author-Information p {
@@ -28,9 +38,10 @@
 }
 
 .decorated {
-    font-weight: 700;
+    font-weight: bolder;
     font-style: italic;
     margin-right: .25rem;
+    text-decoration: underline;
 }
 
 .hidden {

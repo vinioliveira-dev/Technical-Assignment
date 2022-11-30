@@ -20,6 +20,13 @@ class SearchBar extends React.Component {
 
     handleTermChange(event) {
         this.setState({ term: event.target.value });
+    }
+
+    componentDidUpdate(prevState) {
+        if (this.state.term === prevState.term) {
+            return;
+        }
+
         this.search();
     }
 

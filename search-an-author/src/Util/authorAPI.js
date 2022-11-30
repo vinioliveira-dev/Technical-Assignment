@@ -1,26 +1,15 @@
 const authorAPI = {
 
     async search(term) {
-        return fetch(`https://openlibrary.org/search/authors.json?q=${term}&offset=0&limit=20`
+        return fetch(`https://openlibrary.org/search/authors.json?q=${term}&offset=0&limit=10000000`
         ).then( response => {
             return response.json();
         }).then(jsonResponse => {
             if (jsonResponse.numFound <= 0 || jsonResponse.docs.length <= 0) {
                 return [];
             }
-            return jsonResponse.docs.map(author => {
-                const authorsArr = jsonResponse.docs;
-
-                let key = author.key;
-                
-                for (let i = 0; i < authorsArr.length; i++) {
-                    if (authorsArr[i].key === key) {
-                        key = key + 1
-                    }
-                }
-                
+            return jsonResponse.docs.map(author => {                                
                 return ({
-                    key: key,
                     name: author.name,
                     alternateNames: author.alternate_names,
                     birthDate: author.birth_date,
