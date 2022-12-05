@@ -1,5 +1,3 @@
-
-
 First I created a file called index.html and a file called script.js to test the response obtained from the API's endpoint URL provided.
 
 After defining an async function to fetch the data and dealing with the Promise's state handlers, I was able to print the data obtained in the console (testing using the 'console.log' function).
@@ -10,10 +8,7 @@ After creating the app, first thing I did was deleting all unecessary files and 
 
 At this point, my next step was to start creating components. I've only done a simple wireframe in a piece of paper, which gave me an ideia of what components I would need to build. 
 
-I started by creating a directory called "/Components" inside the app's /src folder. In this new directory, I created the folders for each of the __ components, which are:
-- App directory (to where I moved my App.js and app.css files from the /src folder);
-- ...;
-- ...;
+I started by creating a directory called "/Components" inside the app's /src folder. In this new directory, I created the folders for each of the components.
 
 So I began working on the App component, refactoring it to rewrite the function component as a ES6 Class to make it easier to work with the lifecycle methods and the app's state instead of using hooks callbacks.
 
